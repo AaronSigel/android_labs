@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.labs_app.databinding.FragmentHomeBinding
-import com.example.labs_app.getMockChatList
 import com.example.labs_app.ui.HomeScreen
 import com.example.labs_app.ui.theme.Labs_APPTheme
 
@@ -18,6 +18,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ class HomeFragment : Fragment() {
         binding.composeView.setContent {
             Labs_APPTheme {
                 HomeScreen(
-                    chatList = getMockChatList(),
+                    viewModel = viewModel,
                     username = username,
                     onNavigateToOnboard = {
                         Log.d(logTag, "Кнопка «О приложении» → navigate to Onboard")

@@ -34,7 +34,15 @@
     <string name="signup_success">Регистрация успешна</string>
 
     <!-- Home -->
-    <string name="home_title">Чаты</string>
+    <string name="home_title">Список приколов</string>
     <string name="home_greeting">Привет, %1$s!</string>
     <string name="home_go_to_onboard">О приложении</string>
+    <string name="retry">Повторить</string>
+    <string name="home_loaded_count">Получено объектов: %d</string>
+    <string name="home_loaded_count_of">Получено объектов: %1$d из %2$d</string>
+    <string name="error_no_network">Нет подключения к интернету</string>
+    <string name="error_timeout">Превышено время ожидания ответа от сервера</string>
+    <string name="error_http">Ошибка сервера: %1$d %2$s</string>
+    <string name="error_empty_data">Не удалось загрузить ни одного персонажа</string>
+    <string name="error_unknown">Ошибка: %1$s</string>
 </resources>
