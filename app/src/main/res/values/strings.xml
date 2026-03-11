@@ -1,3 +1,36 @@
 <resources>
-    <string name="app_name">Labs_APP</string>
+    <string name="app_name">Labs APP</string>
+
+    <!-- Onboard -->
+    <string name="onboard_title">Добро пожаловать</string>
+    <string name="onboard_description">Войдите или зарегистрируйтесь, чтобы продолжить.</string>
+    <string name="onboard_continue">Продолжить</string>
+
+    <!-- SignIn -->
+    <string name="signin_title">Вход</string>
+    <string name="signin_email">Email</string>
+    <string name="signin_password">Пароль</string>
+    <string name="signin_login">Войти</string>
+    <string name="signin_register">Регистрация</string>
+    <string name="signin_back">Назад</string>
+    <string name="signin_error_email_empty">Введите email</string>
+    <string name="signin_error_email_invalid">Некорректный формат email</string>
+    <string name="signin_error_password_empty">Введите пароль</string>
+
+    <!-- SignUp -->
+    <string name="signup_title">Регистрация</string>
+    <string name="signup_name">Имя</string>
+    <string name="signup_email">Email</string>
+    <string name="signup_password">Пароль</string>
+    <string name="signup_phone">Телефон</string>
+    <string name="signup_submit">Зарегистрироваться</string>
+    <string name="signup_back">Назад</string>
+    <string name="signup_error_name_empty">Введите имя</string>
+    <string name="signup_error_email_invalid">Некорректный формат email</string>
+    <string name="signup_error_password_short">Пароль не менее 6 символов</string>
+    <string name="signup_success">Регистрация успешна</string>
+
+    <!-- Home -->
+    <string name="home_title">Чаты</string>
+    <string name="home_go_to_onboard">О приложении</string>
 </resources>

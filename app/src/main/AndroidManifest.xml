@@ -10,18 +10,33 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Labs_APP">
+        android:theme="@style/Theme.Labs_APP"
+        tools:targetApi="34">
         <activity
-            android:name=".MainActivity"
+            android:name=".OnboardActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Labs_APP">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".SignInActivity"
+            android:exported="false"
+            android:label="@string/signin_title"
+            android:theme="@style/Theme.Labs_APP" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false"
+            android:label="@string/signup_title"
+            android:theme="@style/Theme.Labs_APP" />
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="@string/home_title"
+            android:theme="@style/Theme.Labs_APP" />
     </application>
 
 </manifest>
