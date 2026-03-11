@@ -53,5 +53,13 @@
             app:destination="@id/onboardFragment"
             app:popUpTo="@id/onboardFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_home_to_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.labs_app.ui.settings.SettingsFragment"
+        android:label="Настройки" />
 </navigation>

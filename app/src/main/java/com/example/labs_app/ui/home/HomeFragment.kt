@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.labs_app.databinding.FragmentHomeBinding
 import com.example.labs_app.ui.HomeScreen
-import com.example.labs_app.ui.theme.Labs_APPTheme
+import com.example.labs_app.ui.theme.ThemeFromSettings
 
 class HomeFragment : Fragment() {
 
@@ -43,13 +43,17 @@ class HomeFragment : Fragment() {
         Log.d(logTag, "onViewCreated: user из Safe Args = ${user?.let { "username=${it.username}, email=${it.email}" } ?: "null"}")
 
         binding.composeView.setContent {
-            Labs_APPTheme {
+            ThemeFromSettings {
                 HomeScreen(
                     viewModel = viewModel,
                     username = username,
                     onNavigateToOnboard = {
                         Log.d(logTag, "Кнопка «О приложении» → navigate to Onboard")
                         findNavController().navigate(HomeFragmentDirections.actionHomeToOnboard())
+                    },
+                    onNavigateToSettings = {
+                        Log.d(logTag, "Кнопка «Настройки» → navigate to Settings")
+                        findNavController().navigate(HomeFragmentDirections.actionHomeToSettings())
                     }
                 )
             }

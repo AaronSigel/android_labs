@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.labs_app.data.remote.repository.CharacterRepository
 import com.example.labs_app.domain.model.Character
+import com.example.labs_app.storage.CharacterListCache
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,12 +58,14 @@ class HomeViewModel(
                 .collect { item ->
                     list.add(item)
                     _state.value = HomeUiState.Success(ArrayList(list), isComplete = false)
+                    CharacterListCache.set(ArrayList(list))
                 }
             _state.value = if (list.isEmpty()) {
                 HomeUiState.Error(MSG_EMPTY_DATA)
             } else {
                 HomeUiState.Success(list)
             }
+            CharacterListCache.set(list)
         }
     }
 

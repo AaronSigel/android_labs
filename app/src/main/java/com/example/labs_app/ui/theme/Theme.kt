@@ -9,7 +9,12 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import com.example.labs_app.storage.DEFAULT_DARK_THEME
+import com.example.labs_app.storage.PreferencesDataStoreManager
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -55,4 +60,15 @@ fun Labs_APPTheme(
         typography = Typography,
         content = content
     )
+}
+
+/**
+ * Оборачивает контент в Labs_APPTheme с учётом сохранённой настройки тёмной темы из DataStore.
+ */
+@Composable
+fun ThemeFromSettings(content: @Composable () -> Unit) {
+    val context = LocalContext.current
+    val dataStoreManager = remember(context) { PreferencesDataStoreManager(context.applicationContext) }
+    val darkTheme by dataStoreManager.darkThemeFlow.collectAsState(initial = DEFAULT_DARK_THEME)
+    Labs_APPTheme(darkTheme = darkTheme, content = content)
 }

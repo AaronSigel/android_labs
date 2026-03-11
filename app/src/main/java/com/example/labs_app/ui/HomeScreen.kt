@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
@@ -34,6 +35,7 @@ fun HomeScreen(
     viewModel: HomeViewModel,
     username: String? = null,
     onNavigateToOnboard: (() -> Unit)? = null,
+    onNavigateToSettings: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle(initialValue = HomeUiState.Loading)
@@ -55,9 +57,16 @@ fun HomeScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        onNavigateToOnboard?.let { navigate ->
-            TextButton(onClick = navigate) {
-                Text(stringResource(R.string.home_go_to_onboard))
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            onNavigateToOnboard?.let { navigate ->
+                TextButton(onClick = navigate) {
+                    Text(stringResource(R.string.home_go_to_onboard))
+                }
+            }
+            onNavigateToSettings?.let { navigate ->
+                TextButton(onClick = navigate) {
+                    Text(stringResource(R.string.home_go_to_settings))
+                }
             }
         }
 

@@ -37,6 +37,7 @@
     <string name="home_title">Список приколов</string>
     <string name="home_greeting">Привет, %1$s!</string>
     <string name="home_go_to_onboard">О приложении</string>
+    <string name="home_go_to_settings">Настройки</string>
     <string name="retry">Повторить</string>
     <string name="home_loaded_count">Получено объектов: %d</string>
     <string name="home_loaded_count_of">Получено объектов: %1$d из %2$d</string>
@@ -45,4 +46,26 @@
     <string name="error_http">Ошибка сервера: %1$d %2$s</string>
     <string name="error_empty_data">Не удалось загрузить ни одного персонажа</string>
     <string name="error_unknown">Ошибка: %1$s</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_user_email">Email / Никнейм</string>
+    <string name="settings_notifications">Уведомления</string>
+    <string name="settings_dark_theme">Тёмная тема</string>
+    <string name="settings_backup_file_name">Имя файла резервной копии</string>
+    <string name="settings_save">Сохранить настройки</string>
+    <string name="settings_create_file">Создать/перезаписать файл</string>
+    <string name="settings_delete_file">Удалить внешний файл</string>
+    <string name="settings_restore">Восстановить из резервной копии</string>
+    <string name="settings_external_file_status">Внешний файл</string>
+    <string name="settings_internal_backup_status">Резервная копия</string>
+    <string name="settings_file_exists">Файл есть: %1$s</string>
+    <string name="settings_file_absent">Файл отсутствует</string>
+    <string name="settings_file_path">Путь: %1$s</string>
+    <string name="settings_file_size">Размер: %1$d байт</string>
+    <string name="settings_file_modified">Изменён: %1$s</string>
+    <string name="settings_backup_exists">Резервная копия есть</string>
+    <string name="settings_backup_absent">Резервной копии нет</string>
+    <string name="settings_permission_required">Для работы с файлом нужны разрешения хранилища</string>
+    <string name="settings_go_to_home">На главную</string>
 </resources>
