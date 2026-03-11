@@ -5,23 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.labs_app.databinding.FragmentHomeBinding
 import com.example.labs_app.getMockChatList
-import com.example.labs_app.model.User
 import com.example.labs_app.ui.HomeScreen
 import com.example.labs_app.ui.theme.Labs_APPTheme
-import com.example.labs_app.util.getParcelableCompat
-
-private const val ARG_USER = "user"
 
 class HomeFragment : Fragment() {
 
-    private val tag: String get() = "LabsApp/${javaClass.simpleName}"
+    private val logTag: String get() = "LabsApp/${javaClass.simpleName}"
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(tag, "onCreate")
+        Log.d(logTag, "onCreate")
     }
 
     override fun onCreateView(
@@ -29,32 +29,33 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val user = arguments?.getParcelableCompat<User>(ARG_USER)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val args = HomeFragmentArgs.fromBundle(requireArguments())
+        val user = args.user
         val username = user?.username
-        Log.d(tag, "onCreateView: user из arguments = ${user?.let { "username=${it.username}, email=${it.email}" } ?: "null"}")
-        return ComposeView(requireContext()).apply {
-            setContent {
-                Labs_APPTheme {
-                    HomeScreen(
-                        chatList = getMockChatList(),
-                        username = username,
-                        onNavigateToOnboard = {
-                            Log.d(tag, "Кнопка «О приложении» → navigateToOnboard()")
-                            (activity as? com.example.labs_app.ui.main.MainActivity)?.navigateToOnboard()
-                        }
-                    )
-                }
+        Log.d(logTag, "onViewCreated: user из Safe Args = ${user?.let { "username=${it.username}, email=${it.email}" } ?: "null"}")
+
+        binding.composeView.setContent {
+            Labs_APPTheme {
+                HomeScreen(
+                    chatList = getMockChatList(),
+                    username = username,
+                    onNavigateToOnboard = {
+                        Log.d(logTag, "Кнопка «О приложении» → navigate to Onboard")
+                        findNavController().navigate(HomeFragmentDirections.actionHomeToOnboard())
+                    }
+                )
             }
         }
     }
 
-    companion object {
-        fun newInstance(user: User? = null): HomeFragment {
-            return HomeFragment().apply {
-                arguments = Bundle().apply {
-                    user?.let { putParcelable(ARG_USER, it) }
-                }
-            }
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

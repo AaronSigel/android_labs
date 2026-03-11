@@ -5,23 +5,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
-import com.example.labs_app.model.User
+import androidx.navigation.fragment.findNavController
+import com.example.labs_app.databinding.FragmentSignUpBinding
+import com.example.labs_app.model.SignInPrefill
 import com.example.labs_app.ui.SignUpScreen
 import com.example.labs_app.ui.theme.Labs_APPTheme
 
-/** Ключ для передачи результата регистрации в SignInFragment. */
-const val KEY_SIGN_UP_RESULT = "sign_up_result"
-const val KEY_SIGN_UP_USER = "user"
-
 class SignUpFragment : Fragment() {
 
-    private val tag: String get() = "LabsApp/${javaClass.simpleName}"
+    private val logTag: String get() = "LabsApp/${javaClass.simpleName}"
+
+    private var _binding: FragmentSignUpBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(tag, "onCreate")
+        Log.d(logTag, "onCreate")
     }
 
     override fun onCreateView(
@@ -29,27 +29,34 @@ class SignUpFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d(tag, "onCreateView")
-        return ComposeView(requireContext()).apply {
-            setContent {
-                Labs_APPTheme {
-                    SignUpScreen(
-                        onSuccessToSignIn = { user ->
-                            Log.d(tag, "[Передача данных] setFragmentResult(KEY_SIGN_UP_RESULT): username=${user.username}, email=${user.email}, nickname=${user.nickname}")
-                            parentFragmentManager.setFragmentResult(
-                                KEY_SIGN_UP_RESULT,
-                                Bundle().apply { putParcelable(KEY_SIGN_UP_USER, user) }
-                            )
-                            Log.d(tag, "navigateBack() → возврат в SignInFragment")
-                            (activity as? com.example.labs_app.ui.main.MainActivity)?.navigateBack()
-                        },
-                        onBack = {
-                            Log.d(tag, "Кнопка «Назад» → navigateBack()")
-                            (activity as? com.example.labs_app.ui.main.MainActivity)?.navigateBack()
-                        }
-                    )
-                }
+        Log.d(logTag, "onCreateView")
+        _binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.composeView.setContent {
+            Labs_APPTheme {
+                SignUpScreen(
+                    onSuccessToSignIn = { user ->
+                        val prefill = SignInPrefill(user.username, user.email, user.password)
+                        Log.d(logTag, "[Safe Args] Переход в SignIn с данными: username=${user.username}, email=${user.email}")
+                        findNavController().navigate(
+                            SignUpFragmentDirections.actionSignUpToSignIn(prefill = prefill)
+                        )
+                    },
+                    onBack = {
+                        Log.d(logTag, "Кнопка «Назад» → popBackStack")
+                        findNavController().popBackStack()
+                    }
+                )
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
