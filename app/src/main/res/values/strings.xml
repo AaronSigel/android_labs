@@ -21,6 +21,7 @@
     <!-- SignUp -->
     <string name="signup_title">Регистрация</string>
     <string name="signup_name">Имя</string>
+    <string name="signup_nickname">Никнейм</string>
     <string name="signup_email">Email</string>
     <string name="signup_password">Пароль</string>
     <string name="signup_phone">Телефон</string>

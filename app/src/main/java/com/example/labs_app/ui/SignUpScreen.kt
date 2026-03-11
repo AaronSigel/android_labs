@@ -41,6 +41,7 @@ fun SignUpScreen(
     modifier: Modifier = Modifier
 ) {
     var username by rememberSaveable { mutableStateOf("") }
+    var nickname by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var nameError by rememberSaveable { mutableStateOf<String?>(null) }
@@ -73,6 +74,15 @@ fun SignUpScreen(
             singleLine = true,
             isError = nameError != null,
             supportingText = nameError?.let { { Text(it) } },
+            modifier = Modifier.fillMaxWidth()
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = nickname,
+            onValueChange = { nickname = it },
+            label = { Text(stringResource(R.string.signup_nickname)) },
+            singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(12.dp))
@@ -124,7 +134,7 @@ fun SignUpScreen(
                 }
                 if (nameError == null && emailError == null && passwordError == null) {
                     Toast.makeText(context, R.string.signup_success, Toast.LENGTH_SHORT).show()
-                    onSuccessToSignIn(User(username = username.trim(), email = email.trim(), password = password))
+                    onSuccessToSignIn(User(username = username.trim(), email = email.trim(), password = password, nickname = nickname.trim()))
                 }
             },
             modifier = Modifier.fillMaxWidth()
