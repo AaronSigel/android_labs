@@ -13,7 +13,7 @@
         android:theme="@style/Theme.Labs_APP"
         tools:targetApi="34">
         <activity
-            android:name=".OnboardActivity"
+            android:name=".activities.OnboardActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Labs_APP">
@@ -23,17 +23,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SignInActivity"
+            android:name=".activities.SignInActivity"
             android:exported="false"
             android:label="@string/signin_title"
             android:theme="@style/Theme.Labs_APP" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".activities.SignUpActivity"
             android:exported="false"
             android:label="@string/signup_title"
             android:theme="@style/Theme.Labs_APP" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
             android:exported="false"
             android:label="@string/home_title"
             android:theme="@style/Theme.Labs_APP" />

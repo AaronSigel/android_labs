@@ -24,6 +24,7 @@ import com.example.labs_app.getMockChatList
 @Preview
 fun HomeScreen(
     chatList: List<ChatItemModel> = getMockChatList(),
+    username: String? = null,
     onNavigateToOnboard: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
@@ -37,6 +38,13 @@ fun HomeScreen(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
+        if (username != null) {
+            Text(
+                text = stringResource(R.string.home_greeting, username),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
         onNavigateToOnboard?.let { navigate ->
             TextButton(onClick = navigate) {
                 Text(stringResource(R.string.home_go_to_onboard))

@@ -1,14 +1,14 @@
-package com.example.labs_app
+package com.example.labs_app.activities
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.example.labs_app.ui.OnboardScreen
 import com.example.labs_app.ui.theme.Labs_APPTheme
 
-class OnboardActivity : ComponentActivity() {
+class OnboardActivity : BaseLoggedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -16,6 +16,7 @@ class OnboardActivity : ComponentActivity() {
             Labs_APPTheme {
                 OnboardScreen(
                     onContinue = {
+                        Log.d(lifecycleTag, "Переход в SignInActivity (без данных)")
                         startActivity(Intent(this, SignInActivity::class.java))
                     }
                 )

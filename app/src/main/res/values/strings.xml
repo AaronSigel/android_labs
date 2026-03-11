@@ -16,6 +16,7 @@
     <string name="signin_error_email_empty">Введите email</string>
     <string name="signin_error_email_invalid">Некорректный формат email</string>
     <string name="signin_error_password_empty">Введите пароль</string>
+    <string name="signin_logged_as">Вы вошли как: %1$s (%2$s)</string>
 
     <!-- SignUp -->
     <string name="signup_title">Регистрация</string>
@@ -27,10 +28,12 @@
     <string name="signup_back">Назад</string>
     <string name="signup_error_name_empty">Введите имя</string>
     <string name="signup_error_email_invalid">Некорректный формат email</string>
+    <string name="signup_error_password_empty">Введите пароль</string>
     <string name="signup_error_password_short">Пароль не менее 6 символов</string>
     <string name="signup_success">Регистрация успешна</string>
 
     <!-- Home -->
     <string name="home_title">Чаты</string>
+    <string name="home_greeting">Привет, %1$s!</string>
     <string name="home_go_to_onboard">О приложении</string>
 </resources>

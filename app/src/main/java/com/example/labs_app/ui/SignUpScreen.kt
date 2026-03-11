@@ -28,23 +28,21 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.labs_app.R
+import com.example.labs_app.model.User
 
-private fun isValidEmail(email: String): Boolean {
-    return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-}
+/** Валидация email: наличие @ (минимальная проверка по ТЗ). */
+private fun emailContainsAt(email: String): Boolean = email.contains("@")
 
 @Composable
 @Preview
 fun SignUpScreen(
-    onSuccessToSignIn: () -> Unit = {},
-    onSuccessToHome: () -> Unit = {},
+    onSuccessToSignIn: (User) -> Unit = {},
     onBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    var name by rememberSaveable { mutableStateOf("") }
+    var username by rememberSaveable { mutableStateOf("") }
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
-    var phone by rememberSaveable { mutableStateOf("") }
     var nameError by rememberSaveable { mutableStateOf<String?>(null) }
     var emailError by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
@@ -66,9 +64,9 @@ fun SignUpScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
-            value = name,
+            value = username,
             onValueChange = {
-                name = it
+                username = it
                 nameError = null
             },
             label = { Text(stringResource(R.string.signup_name)) },
@@ -107,35 +105,26 @@ fun SignUpScreen(
             supportingText = passwordError?.let { { Text(it) } },
             modifier = Modifier.fillMaxWidth()
         )
-        Spacer(modifier = Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = phone,
-            onValueChange = { phone = it },
-            label = { Text(stringResource(R.string.signup_phone)) },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
-            modifier = Modifier.fillMaxWidth()
-        )
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
             onClick = {
                 nameError = when {
-                    name.isBlank() -> context.getString(R.string.signup_error_name_empty)
+                    username.isBlank() -> context.getString(R.string.signup_error_name_empty)
                     else -> null
                 }
                 emailError = when {
-                    !isValidEmail(email) -> context.getString(R.string.signup_error_email_invalid)
+                    !emailContainsAt(email) -> context.getString(R.string.signup_error_email_invalid)
                     else -> null
                 }
                 passwordError = when {
+                    password.isBlank() -> context.getString(R.string.signup_error_password_empty)
                     password.length < 6 -> context.getString(R.string.signup_error_password_short)
                     else -> null
                 }
                 if (nameError == null && emailError == null && passwordError == null) {
                     Toast.makeText(context, R.string.signup_success, Toast.LENGTH_SHORT).show()
-                    onSuccessToHome()
+                    onSuccessToSignIn(User(username = username.trim(), email = email.trim(), password = password))
                 }
             },
             modifier = Modifier.fillMaxWidth()

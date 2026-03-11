@@ -27,6 +27,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.labs_app.R
+import com.example.labs_app.model.User
 
 private fun isValidEmail(email: String): Boolean {
     return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -35,12 +36,13 @@ private fun isValidEmail(email: String): Boolean {
 @Composable
 @Preview
 fun SignInScreen(
-    onLoginSuccess: () -> Unit = {},
+    initialUser: User? = null,
+    onLoginSuccess: (username: String) -> Unit = {},
     onRegister: () -> Unit = {},
     onBack: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
-    var email by rememberSaveable { mutableStateOf("") }
+    var email by rememberSaveable(initialUser?.email) { mutableStateOf(initialUser?.email ?: "") }
     var password by rememberSaveable { mutableStateOf("") }
     var emailError by rememberSaveable { mutableStateOf<String?>(null) }
     var passwordError by rememberSaveable { mutableStateOf<String?>(null) }
@@ -59,6 +61,14 @@ fun SignInScreen(
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onBackground
         )
+        if (initialUser != null) {
+            Spacer(modifier = Modifier.height(8.dp))
+            Text(
+                text = context.getString(R.string.signin_logged_as, initialUser.username, initialUser.email),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
@@ -103,7 +113,7 @@ fun SignInScreen(
                     else -> null
                 }
                 if (emailError == null && passwordError == null) {
-                    onLoginSuccess()
+                    onLoginSuccess(initialUser?.username ?: email)
                 }
             },
             modifier = Modifier.fillMaxWidth()
