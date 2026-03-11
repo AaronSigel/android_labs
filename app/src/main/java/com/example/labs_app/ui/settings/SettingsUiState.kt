@@ -19,7 +19,11 @@ data class SettingsUiState(
     val isRestoring: Boolean = false,
     val errorMessage: String? = null,
     /** Количество объектов в кэше для экспорта (из Home). */
-    val exportDataCount: Int = 0
+    val exportDataCount: Int = 0,
+    /** Текущий активный pageGroup списка персонажей (из SharedPrefs). */
+    val currentPageGroup: Int = 23,
+    /** Общее количество записей в локальной БД Room. */
+    val totalRecordCount: Int = 0
 ) {
     val canCreateFile: Boolean get() = exportDataCount > 0 && !isExporting
     val canDeleteFile: Boolean get() = externalFileInfo.exists && !isDeleting

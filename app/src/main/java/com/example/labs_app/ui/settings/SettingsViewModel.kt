@@ -36,7 +36,7 @@ class SettingsViewModel(
             }.fold(
                 onSuccess = { initial ->
                     val exportCount = CharacterListCache.get().size
-                    Log.d(logTag, "load: успех, exportDataCount=$exportCount, backupFileName=${initial.backupFileName}")
+                    Log.d(logTag, "load: успех, exportDataCount=$exportCount, currentPageGroup=${initial.currentPageGroup}, totalRecordCount=${initial.totalRecordCount}")
                     _state.value = initial.copy(
                         isLoading = false,
                         exportDataCount = exportCount
@@ -145,6 +145,25 @@ class SettingsViewModel(
                                 isDeleting = false,
                                 errorMessage = e.message ?: "Ошибка удаления"
                             )
+                        }
+                    }
+                )
+        }
+    }
+
+    fun clearCharacterCache() {
+        Log.d(logTag, "clearCharacterCache")
+        viewModelScope.launch {
+            _state.update { it.copy(errorMessage = null) }
+            repository.clearCharacterCache()
+                .fold(
+                    onSuccess = {
+                        load()
+                    },
+                    onFailure = { e ->
+                        Log.e(logTag, "clearCharacterCache: ошибка", e)
+                        _state.update {
+                            it.copy(errorMessage = e.message ?: "Ошибка очистки кэша")
                         }
                     }
                 )

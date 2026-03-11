@@ -10,6 +10,8 @@ const val DEFAULT_BACKUP_FILE_NAME = "characters_23.txt"
 
 private const val PREFS_NAME = "labs_app_prefs"
 private const val KEY_BACKUP_FILE_NAME = "backup_file_name"
+private const val KEY_CURRENT_PAGE_GROUP = "current_character_page_group"
+private const val DEFAULT_PAGE_GROUP = 23
 
 /**
  * Менеджер имени файла резервной копии в SharedPreferences.
@@ -30,5 +32,12 @@ class SharedPrefsManager(context: Context) {
     fun setBackupFileName(fileName: String) {
         Log.d(logTag, "setBackupFileName: $fileName")
         prefs.edit { putString(KEY_BACKUP_FILE_NAME, fileName) }
+    }
+
+    fun getCurrentCharacterPageGroup(): Int =
+        prefs.getInt(KEY_CURRENT_PAGE_GROUP, DEFAULT_PAGE_GROUP)
+
+    fun setCurrentCharacterPageGroup(pageGroup: Int) {
+        prefs.edit { putInt(KEY_CURRENT_PAGE_GROUP, pageGroup) }
     }
 }

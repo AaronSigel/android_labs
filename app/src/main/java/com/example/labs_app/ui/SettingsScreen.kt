@@ -179,6 +179,30 @@ fun SettingsScreen(
                 )
             }
         }
+        Spacer(modifier = Modifier.height(8.dp))
+
+        Card(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.padding(12.dp)) {
+                Text(
+                    text = "Локальный кэш персонажей (Room)",
+                    style = MaterialTheme.typography.titleSmall,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = "Текущий вариант: ${state.currentPageGroup}. Записей в БД: ${state.totalRecordCount}.",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Button(
+                    onClick = { viewModel.clearCharacterCache() },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text("Очистить кэш")
+                }
+            }
+        }
         Spacer(modifier = Modifier.height(16.dp))
 
         state.errorMessage?.let { msg ->

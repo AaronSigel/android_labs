@@ -1,6 +1,7 @@
 package com.example.labs_app.ui.settings
 
 import android.util.Log
+import com.example.labs_app.data.repository.CharacterRepository
 import com.example.labs_app.domain.model.Character
 import com.example.labs_app.storage.BackupFileManager
 import com.example.labs_app.storage.FileInfo
@@ -15,7 +16,8 @@ import kotlinx.coroutines.withContext
 class SettingsRepository(
     private val dataStoreManager: PreferencesDataStoreManager,
     private val sharedPrefsManager: SharedPrefsManager,
-    private val backupFileManager: BackupFileManager
+    private val backupFileManager: BackupFileManager,
+    private val characterRepository: CharacterRepository
 ) {
 
     private val logTag: String get() = "LabsApp/${javaClass.simpleName}"
@@ -32,6 +34,9 @@ class SettingsRepository(
         val externalFileInfo = backupFileManager.getExternalFileInfo(backupFileName)
         val internalBackupInfo = backupFileManager.getInternalBackupInfo(backupFileName)
         Log.d(logTag, "loadInitialState: backupFileName=$backupFileName, externalExists=${externalFileInfo.exists}, internalExists=${internalBackupInfo.exists}")
+        val currentPageGroup = sharedPrefsManager.getCurrentCharacterPageGroup()
+        val totalRecordCount = characterRepository.getTotalRecordCount()
+        Log.d(logTag, "loadInitialState: currentPageGroup=$currentPageGroup, totalRecordCount=$totalRecordCount")
         SettingsUiState(
             userEmail = userEmail,
             notificationsEnabled = notificationsEnabled,
@@ -39,7 +44,9 @@ class SettingsRepository(
             backupFileName = backupFileName,
             externalFileInfo = externalFileInfo,
             internalBackupInfo = internalBackupInfo,
-            isLoading = false
+            isLoading = false,
+            currentPageGroup = currentPageGroup,
+            totalRecordCount = totalRecordCount
         )
     }
 
@@ -74,4 +81,10 @@ class SettingsRepository(
 
     suspend fun getInternalBackupInfo(fileName: String): FileInfo =
         backupFileManager.getInternalBackupInfo(fileName)
+
+    /** Очистка локального кэша персонажей (Room). */
+    suspend fun clearCharacterCache(): Result<Unit> {
+        Log.d(logTag, "clearCharacterCache()")
+        return characterRepository.clearAll()
+    }
 }

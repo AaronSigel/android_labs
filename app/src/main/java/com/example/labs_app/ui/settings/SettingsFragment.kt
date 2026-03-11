@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.labs_app.databinding.FragmentSettingsBinding
+import com.example.labs_app.data.repository.CharacterRepository
 import com.example.labs_app.storage.BackupFileManager
 import com.example.labs_app.storage.PreferencesDataStoreManager
 import com.example.labs_app.storage.SharedPrefsManager
@@ -60,7 +61,8 @@ class SettingsFragment : Fragment() {
         repository = SettingsRepository(
             PreferencesDataStoreManager(app),
             SharedPrefsManager(app),
-            BackupFileManager(app)
+            BackupFileManager(app),
+            CharacterRepository(app)
         )
     }
 

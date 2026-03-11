@@ -3,11 +3,12 @@ package com.example.labs_app.ui.home
 import com.example.labs_app.domain.model.Character
 
 /**
- * Состояние экрана Home: загрузка, успех с данными или ошибка.
+ * Состояние экрана Home: список из Room, индикатор загрузки, ошибка.
+ * Источник списка — Flow Room; сеть только наполняет БД.
  */
-sealed class HomeUiState {
-    data object Loading : HomeUiState()
-    /** @param isComplete false — загрузка ещё идёт, элементы приходят в реальном времени */
-    data class Success(val characters: List<Character>, val isComplete: Boolean = true) : HomeUiState()
-    data class Error(val message: String) : HomeUiState()
-}
+data class HomeUiState(
+    val characters: List<Character> = emptyList(),
+    val pageGroup: Int = 23,
+    val isLoading: Boolean = false,
+    val errorMessage: String? = null
+)

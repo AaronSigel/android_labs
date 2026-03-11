@@ -4,6 +4,7 @@ package com.example.labs_app.domain.model
  * Доменная модель персонажа для отображения в UI.
  */
 data class Character(
+    val id: Int,
     val name: String,
     val culture: String,
     val born: String,
